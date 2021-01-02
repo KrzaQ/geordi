@@ -1,0 +1,21 @@
+#!/bin/bash
+set -euv
+
+cd /
+wget 'https://sourceforge.net/projects/boost/files/latest/download?source=files' -O boost.7z
+
+mkdir boost.build
+
+7z x boost.7z -oboost.build
+
+cd boost.build/*
+
+./bootstrap.sh
+
+./b2 -j 4
+
+./b2 install
+
+cd /
+rm -rf /boost.tar.bz2 /boost.build
+

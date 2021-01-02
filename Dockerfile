@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 RUN export DEBIAN_FRONTEND=noninteractive && \
-    apt-get update && apt-get install -y libreadline-dev libboost-dev build-essential libgmp-dev pkg-config libseccomp-dev software-properties-common subversion libmpfr-dev libmpc-dev flex zlib1g-dev git libedit-dev ncurses-dev cmake bison libcap-dev python wget locales-all dnsutils unzip
+    apt-get update && apt-get install -y libreadline-dev libboost-dev build-essential libgmp-dev pkg-config libseccomp-dev software-properties-common subversion libmpfr-dev libmpc-dev flex zlib1g-dev git libedit-dev ncurses-dev cmake bison libcap-dev python python-dev wget locales-all dnsutils unzip p7zip-full
 
 #COPY llvm-no-temp-files.patch /geordi/src/
 #COPY install-clang /geordi/src/
@@ -13,6 +13,9 @@ RUN apt-get install -y haskell-platform
 
 COPY install-gcc-trunk /geordi/src/
 RUN /geordi/src/install-gcc-trunk
+
+COPY install-boost /geordi/src/
+RUN /geordi/src/install-boost
 
 RUN mkdir -p ~/.cabal/bin # working around a cabal bug
 RUN cabal update && cabal --ghc-option="-optl-no-pie" install --global --reorder-goals --allow-newer=process bytestring text deepseq mtl syb utf8-string network network-bsd containers readline parsec Diff regex-compat base-unicode-symbols setops streams semigroups regex-posix template-haskell transformers pointed distributive comonad contravariant profunctors semigroupoids irc setlocale HTTP Cabal

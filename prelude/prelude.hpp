@@ -4,6 +4,27 @@
   #include "libstdcxx_patched_typeinfo.hpp"
 #endif
 
+#if __cplusplus >= 201402
+// kq
+
+#include <boost/hana.hpp>
+namespace hana = boost::hana;
+using namespace hana::literals;
+#endif
+
+#if 0
+#ifndef __clang__
+  #include <debug/macros.h>
+
+  #ifdef _GLIBCXX_DEBUG_VERIFY
+    #undef _GLIBCXX_DEBUG_VERIFY
+    #define _GLIBCXX_DEBUG_VERIFY(_Condition,_ErrorMessage) \
+      do if (! (_Condition)) ::__gnu_debug::_Error_formatter::_M_at("E7tKRJpMcGq574LY", 0)._ErrorMessage._M_error(); while (false)
+    // "E7tKRJpMcGq574LY" is just a random string, recognized by the error filters, chosen to minimize the chance of false positives.
+  #endif
+#endif
+#endif
+
 #if __cplusplus >= 201103 // maybe backport parts of these even further someday
   #include "lvalue_rvalue.hpp"
   #include "bin_iomanip.hpp"
